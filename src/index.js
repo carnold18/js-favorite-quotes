@@ -74,20 +74,30 @@ function addQuoteToApi(event) {
                 .then(data => renderNewQuote(data))
         } else if (isEditMode === true) {
             console.log(id)
-            // fetch(quotesUrl+"/"+quote["id"], {
-            //     method: "PATCH",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Accept": "application/json"
-            //     },
-            //     body: JSON.stringify({
-            //         quote: document.getElementById('edit-quote').value,
-            //         author: document.getElementById('edit-author').value
-            //     })
-            // })
-            //     .then(response => response.json())
-            //     .then(console.log)
+            console.log(quotesUrl+"/"+id)
+            console.log(document.getElementById('edit-quote').value)
+            console.log(document.getElementById('edit-author').value)
+            let quote = document.getElementById('edit-quote').value
+            let author = document.getElementById('edit-author').value
+            fetch(quotesUrl+"/"+id, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    quote: quote,
+                    author: author
+                })
+            })
+                .then(response => response.json())
+                .then(data => updateQuote(data))
         }
+}
+
+function updateQuote(quote) {
+    // console.log(quote)
+    debugger
 }
 
 function renderNewQuote(quote) {
@@ -149,7 +159,7 @@ function handleEvent(event) {
         isEditMode = true;
         console.log(isEditMode)
        event.target.parentElement.parentElement.innerHTML += `
-        <form id="new-quote-form">
+        <form id="edit-quote-form-${id}">e
             <div class="form-group">
                 <label for="new-quote">Current Quote</label>
                 <input type="text" class="form-control" id="edit-quote">
@@ -167,6 +177,8 @@ function handleEvent(event) {
         console.log("im inside send edited quote function")
         // isEditMode = false;
         console.log(isEditMode)
+        document.getElementById(`edit-quote-form-${id}`).remove()
+        document
     }
 }
 
