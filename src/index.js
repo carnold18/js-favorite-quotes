@@ -97,7 +97,11 @@ function addQuoteToApi(event) {
 
 function updateQuote(quote) {
     // console.log(quote)
-    debugger
+    document.getElementById(`edit-quote-form-${id}`).remove();
+    let li = document.getElementById(`quote-${id}`);
+    li.children[0].children[0].innerText = quote["quote"];
+    li.children[0].children[1].innerText = quote["author"];
+    console.log(li)
 }
 
 function renderNewQuote(quote) {
@@ -177,8 +181,7 @@ function handleEvent(event) {
         console.log("im inside send edited quote function")
         // isEditMode = false;
         console.log(isEditMode)
-        document.getElementById(`edit-quote-form-${id}`).remove()
-        document
+        
     }
 }
 
