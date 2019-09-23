@@ -183,5 +183,4 @@ function getQuoteEditInfo(quote) {
     console.log(quote)
     document.getElementById('edit-quote').value = quote["quote"]
     document.getElementById('edit-author').value = quote["author"]
-    // document.getElementById('submit-edit').addEventListener("click", () => sendEditedQuote(event)
 }
