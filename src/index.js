@@ -32,9 +32,6 @@ function renderQuotes(quotes) {
         let quoteAuthor = quote["author"];
         let quoteString = quote["quote"];
         let quoteLikes = quote["likes"].length;
-        // console.log(quoteAuthor);
-        // console.log(quoteString);
-        // console.log(quoteLikes);
         quotesSection.innerHTML += `
             <li class='quote-card' id="quote-${quote["id"]}">
                 <blockquote class="blockquote">
@@ -56,7 +53,6 @@ function addQuoteToApi(event) {
     event.preventDefault();
     const quote = quoteDiv.value;
     const author = authorDiv.value;
-    console.log(isEditMode)
         if (isEditMode !== true) {
             console.log(isEditMode)
             fetch(quotesUrl, {
@@ -73,10 +69,6 @@ function addQuoteToApi(event) {
                 .then(response => response.json())
                 .then(data => renderNewQuote(data))
         } else if (isEditMode === true) {
-            console.log(id)
-            console.log(quotesUrl+"/"+id)
-            console.log(document.getElementById('edit-quote').value)
-            console.log(document.getElementById('edit-author').value)
             let quote = document.getElementById('edit-quote').value
             let author = document.getElementById('edit-author').value
             fetch(quotesUrl+"/"+id, {
@@ -96,12 +88,10 @@ function addQuoteToApi(event) {
 }
 
 function updateQuote(quote) {
-    // console.log(quote)
     document.getElementById(`edit-quote-form-${id}`).remove();
     let li = document.getElementById(`quote-${id}`);
     li.children[0].children[0].innerText = quote["quote"];
     li.children[0].children[1].innerText = quote["author"];
-    console.log(li)
 }
 
 function renderNewQuote(quote) {
@@ -163,7 +153,7 @@ function handleEvent(event) {
         isEditMode = true;
         console.log(isEditMode)
        event.target.parentElement.parentElement.innerHTML += `
-        <form id="edit-quote-form-${id}">e
+        <form id="edit-quote-form-${id}">
             <div class="form-group">
                 <label for="new-quote">Current Quote</label>
                 <input type="text" class="form-control" id="edit-quote">
@@ -177,12 +167,7 @@ function handleEvent(event) {
         fetch(quotesUrl+"/"+id)
             .then(response => response.json())
             .then(data => getQuoteEditInfo(data))
-    } else if (event.target.id == "submit-edit") {
-        console.log("im inside send edited quote function")
-        // isEditMode = false;
-        console.log(isEditMode)
-        
-    }
+    } 
 }
 
 function increaseLikesRender(like) {
@@ -199,22 +184,4 @@ function getQuoteEditInfo(quote) {
     document.getElementById('edit-quote').value = quote["quote"]
     document.getElementById('edit-author').value = quote["author"]
     // document.getElementById('submit-edit').addEventListener("click", () => sendEditedQuote(event)
-}
-
-function sendEditedQuote(event) {
-    
-    event.preventDefault();
-    // fetch(quotesUrl+"/"+quote["id"], {
-    //     method: "PATCH",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         "Accept": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         quote: document.getElementById('edit-quote').value,
-    //         author: document.getElementById('edit-author').value
-    //     })
-    // })
-    //     .then(response => response.json())
-    //     .then(console.log)
 }
