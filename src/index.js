@@ -11,8 +11,10 @@ const quotesSection = document.querySelector("#quote-list");
 const newQuoteForm = document.getElementById("new-quote-form");
 const quoteDiv = document.getElementById('new-quote');
 const authorDiv = document.getElementById('author');
+const sortButton = document.getElementById('sort-button');
 let isEditMode = false;
 let id = "";
+let sortedToggle = false;
 
 // Step 1: Render all existing quotes on page load.
 document.addEventListener("DOMContentLoaded",
@@ -25,24 +27,62 @@ function getQuotes() {
         .then(data => renderQuotes(data))
 }
 
-function renderQuotes(quotes) {
+function sortQuotes() {
+    console.log(sortedToggle)
+    sortedToggle == false ? sortedToggle = true : sortedToggle = false;
+    fetch(embeddedLikesUrl)
+        .then(response => response.json())
+        .then(data => renderQuotes(data))
+}
 
-    for (let i = 0; i < quotes.length; i++) {
-        let quote = quotes[i];
-        let quoteAuthor = quote["author"];
-        let quoteString = quote["quote"];
-        let quoteLikes = quote["likes"].length;
-        quotesSection.innerHTML += `
-            <li class='quote-card' id="quote-${quote["id"]}">
-                <blockquote class="blockquote">
-                    <p class="mb-0">${quoteString}</p>
-                    <footer class="blockquote-footer">${quoteAuthor}</footer>
-                    <br>
-                    <button class='btn-success'>Likes: <span>${quoteLikes}</span></button>
-                    <button class='btn-danger'>Delete</button>
-                    <button class='edit-quote'>Edit</button>
-                </blockquote>
-            </li>`
+sortButton.addEventListener('click', (event) => sortQuotes(event))
+
+function renderQuotes(quotes) {
+    console.log(quotes)
+    if (sortedToggle == false) {
+        quotesSection.innerHTML = '';
+        for (let i = 0; i < quotes.length; i++) {
+            let quote = quotes[i];
+            let quoteAuthor = quote["author"];
+            let quoteString = quote["quote"];
+            let quoteLikes = quote["likes"].length;
+            quotesSection.innerHTML += `
+                <li class='quote-card' id="quote-${quote["id"]}">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">${quoteString}</p>
+                        <footer class="blockquote-footer">${quoteAuthor}</footer>
+                        <br>
+                        <button class='btn-success'>Likes: <span>${quoteLikes}</span></button>
+                        <button class='btn-danger'>Delete</button>
+                        <button class='edit-quote'>Edit</button>
+                    </blockquote>
+                </li>`
+        }
+    } else if (sortedToggle == true) {
+        quotes.sort(function(a, b){
+            if(a.author < b.author) { return -1; }
+            if(a.author > b.author) { return 1; }
+            return 0;
+        })
+        quotesSection.innerHTML = '';
+        for (let i = 0; i < quotes.length; i++) {
+            let quote = quotes[i];
+            let quoteAuthor = quote["author"];
+            let quoteString = quote["quote"];
+            let quoteLikes = quote["likes"].length;
+            quotesSection.innerHTML += `
+                <li class='quote-card' id="quote-${quote["id"]}">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">${quoteString}</p>
+                        <footer class="blockquote-footer">${quoteAuthor}</footer>
+                        <br>
+                        <button class='btn-success'>Likes: <span>${quoteLikes}</span></button>
+                        <button class='btn-danger'>Delete</button>
+                        <button class='edit-quote'>Edit</button>
+                    </blockquote>
+                </li>`
+        }
+        // sortedToggle = false;
     }
     quotesSection.addEventListener("click", () => handleEvent(event))
 }

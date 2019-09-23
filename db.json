@@ -51,7 +51,7 @@
       "author": "Sonia Sotomayor"
     },
     {
-      "quote": "When you know better, you do better!",
+      "quote": "When you know better, you do better!!",
       "author": "Oprah",
       "id": 11
     }
@@ -193,6 +193,66 @@
     {
       "quoteId": 11,
       "id": 81
+    },
+    {
+      "quoteId": 11,
+      "id": 82
+    },
+    {
+      "quoteId": 11,
+      "id": 83
+    },
+    {
+      "quoteId": 11,
+      "id": 84
+    },
+    {
+      "quoteId": 11,
+      "id": 85
+    },
+    {
+      "quoteId": 11,
+      "id": 86
+    },
+    {
+      "quoteId": 11,
+      "id": 87
+    },
+    {
+      "quoteId": 11,
+      "id": 88
+    },
+    {
+      "quoteId": 11,
+      "id": 89
+    },
+    {
+      "quoteId": 11,
+      "id": 90
+    },
+    {
+      "quoteId": 11,
+      "id": 91
+    },
+    {
+      "quoteId": 11,
+      "id": 92
+    },
+    {
+      "quoteId": 11,
+      "id": 93
+    },
+    {
+      "quoteId": 11,
+      "id": 94
+    },
+    {
+      "quoteId": 11,
+      "id": 95
+    },
+    {
+      "quoteId": 11,
+      "id": 96
     }
   ]
 }
